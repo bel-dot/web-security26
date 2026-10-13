@@ -1,0 +1,114 @@
+### GET all games - Happy Path
+GET http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+###
+
+### GET all games - Bad Credentials
+GET http://localhost:8080/api/v1/games
+Authorization: Basic admin admin
+Accept: application/json
+###
+
+### GET one game - Happy Path
+GET http://localhost:8080/api/v1/games/1
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+###
+
+### GET one game - Bad Credentials
+GET http://localhost:8080/api/v1/games/1
+Authorization: Basic admin admin
+Accept: application/json
+###
+
+### GET one game - get empty response for accessing the game that doesn't exist
+GET http://localhost:8080/api/v1/games/999
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+###
+
+### The next HTTP requests will all get 401 HTTP Response
+### because of CSRF protection enabled by default
+### TODO for the next task: configure SpringBoot Security
+
+### CREATE new game - Happy Path
+POST http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+
+{
+  "id": "4",
+  "name": "DOOM (1993)",
+  "description": "The legendary FPS that made revolution in graphics and gaming industry at its time period.",
+  "genre": "shooter"
+}
+###
+
+### CREATE new game - Bad Credentials
+POST http://localhost:8080/api/v1/games
+Authorization: Basic admin admin
+Accept: application/json
+
+{
+  "id": "5",
+  "name": "Horses",
+  "description": "Very strange black and white arthouse",
+  "genre": "horror"
+}
+###
+
+### CREATE new game - Invalid Request body
+POST http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+
+{
+  "id": "7",
+  "description": "seven",
+  "genre": "seven"
+}
+###
+
+### UPDATE existing game - Happy Path
+PUT http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+
+{
+  "id": "4",
+  "name": "Minecraft",
+  "description": "The best selling videogame in history, released in 2011.",
+  "genre": "sandbox"
+}
+###
+
+### UPDATE existing game - Bad Credentials
+PUT http://localhost:8080/api/v1/games
+Authorization: Basic admin admin
+Accept: application/json
+
+{
+  "id": "2",
+  "name": "Machinarium",
+  "description": "2009 game set in a robot world",
+  "genre": "puzzle"
+}
+###
+
+### UPDATE existing game - No ID
+PUT http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+
+{
+  "name": "Machinarium",
+  "description": "2009 game set in a robot world",
+  "genre": "puzzle"
+}
+###
+
+### DELETE existing game - Happy Path
+DELETE http://localhost:8080/api/v1/games/2
+Authorization: Basic admin Co0l@dmin1337
+###
