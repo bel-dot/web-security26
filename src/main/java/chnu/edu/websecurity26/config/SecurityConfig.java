@@ -23,10 +23,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( auth ->
                         auth.requestMatchers("/index.html").permitAll()
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/games/").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/v1/games/", "api/v1/games").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/games/", "api/v1/games").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/api/v1/games/", "api/v1/games").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/games/{id}").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/games/", "/api/v1/games").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/games/", "/api/v1/games").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/v1/games/", "/api/v1/games").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/api/v1/games/hello").permitAll()
                                 .requestMatchers("/api/v1/games/hello/admin").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/games/hello/user").hasRole("USER")
@@ -53,7 +53,7 @@ public class SecurityConfig {
 
         UserDetails superadmin = User.builder()
                 .username("superadmin")
-                .password("superadmin")
+                .password("{noop}superadmin")
                 .roles("SUPERADMIN", "ADMIN", "USER")
                 .build();
 
