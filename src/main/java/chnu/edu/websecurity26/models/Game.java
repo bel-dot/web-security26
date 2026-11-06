@@ -9,7 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @ToString
 @Document
-public class Game {
+@Getter
+@Setter
+public class Game extends Auditable {
     private String id;
     private String name;
     private String description;
