@@ -26,6 +26,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/games/").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/v1/games/", "api/v1/games").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/api/v1/games/", "api/v1/games").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/v1/games/", "api/v1/games").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/api/v1/games/hello").permitAll()
                                 .requestMatchers("/api/v1/games/hello/admin").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/games/hello/user").hasRole("USER")
