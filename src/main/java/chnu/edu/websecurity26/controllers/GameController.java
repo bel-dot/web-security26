@@ -35,4 +35,24 @@ public class GameController {
     public void deleteGame(@PathVariable String id) {
         gameService.deleteGame(id);
     }
+
+    @GetMapping("/hello/admin")
+    public String helloAdmin() {
+        return "Hello, Administrator.";
+    }
+
+    @GetMapping("/hello/user")
+    public String helloUser() {
+        return "Hello, user.";
+    }
+
+    @GetMapping("/hello/human")
+    public String helloHuman() {
+        return "Hello, human.";
+    }
+
+    @GetMapping("/hello")
+    public String helloUnknown() {
+        return "Hello, wait, do I know you?";
+    }
 }
