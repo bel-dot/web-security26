@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/v1/games")
 @RequiredArgsConstructor
 public class GameController {
-    private final GameService gameService = new GameService();
+    private final GameService gameService;
 
     @GetMapping
     public List<Game> getAll() { return gameService.getAllGames(); }

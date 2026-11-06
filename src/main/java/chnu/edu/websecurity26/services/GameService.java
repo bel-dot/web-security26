@@ -1,6 +1,9 @@
 package chnu.edu.websecurity26.services;
 
 import chnu.edu.websecurity26.models.Game;
+import chnu.edu.websecurity26.repositories.GameRepository;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class GameService {
 
     // Initialize list with 3 starter entries
@@ -17,16 +21,22 @@ public class GameService {
             new Game("3", "Celeste", "Narrative-driven precision platformer about conquering Mount Celeste.", "Platformer")
     ));
 
+    private final GameRepository gameRepository;
+
+    @PostConstruct
+    void init() {
+        gameRepository.deleteAll();
+        games.forEach(this::createGame);
+    }
+
     // READ ALL
     public List<Game> getAllGames() {
-        return new ArrayList<>(games);
+        return gameRepository.findAll();
     }
 
     // READ ONE
     public Game getGameById(String id) {
-        return games.stream()
-                .filter(game -> game.getId().equals(id))
-                .findFirst().orElse(null);
+        return gameRepository.findById(id).orElse(null);
     }
 
     // CREATE
@@ -34,25 +44,23 @@ public class GameService {
         if (game.getId() == null || game.getId().isBlank()) {
             game.setId(UUID.randomUUID().toString());
         }
-        games.add(game);
-        return game;
+        return gameRepository.save(game);
     }
 
     // UPDATE
     public Game updateGame(Game updatedGame) {
         Game oldGame = getGameById(updatedGame.getId());
         if(oldGame != null) {
-            games.remove(oldGame);
-            games.add(updatedGame);
-            return updatedGame;
+            oldGame.setName(updatedGame.getName());
+            oldGame.setDescription(updatedGame.getDescription());
+            oldGame.setGenre(updatedGame.getGenre());
+            return gameRepository.save(oldGame);
         }
         else return null;
     }
 
     // DELETE
     public void deleteGame(String id) {
-        Game foundYou = getGameById(id);
-        if(foundYou != null)
-            games.remove(foundYou);
+        gameRepository.deleteById(id);
     }
 }
