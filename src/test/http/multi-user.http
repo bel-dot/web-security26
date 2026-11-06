@@ -1,0 +1,175 @@
+@host = http://localhost:8080
+
+### Public Endpoints
+### Basic request - must return .html file
+GET {{host}}/index.html
+
+###
+### Basic /hello request - must return 200 + string
+GET {{host}}/api/v1/games/hello
+
+### Role-based Endpoints: /admin
+### No authorization - must return 403
+GET {{host}}/api/v1/games/hello/admin
+
+###
+### User authorization - must return 403
+GET {{host}}/api/v1/games/hello/admin
+Authorization: Basic user user
+
+###
+### Admin authorization - must return 200 and string
+GET {{host}}/api/v1/games/hello/admin
+Authorization: Basic admin Co0l@dmin1337
+
+### Role-based Endpoints: /user
+### User authorization - must return 200 and string
+GET {{host}}/api/v1/games/hello/user
+Authorization: Basic user user
+
+###
+### Admin authorization - must return 403
+GET {{host}}/api/v1/games/hello/user
+Authorization: Basic admin Co0l@dmin1337
+
+### Role-based Endpoints: /human
+### User authorization - must return 200 and string
+GET {{host}}/api/v1/games/hello/human
+Authorization: Basic user user
+
+###
+### Admin authorization - must return 200 and string
+GET {{host}}/api/v1/games/hello/human
+Authorization: Basic admin Co0l@dmin1337
+
+###
+### No authorization - must return 403
+GET {{host}}/api/v1/games/hello/human
+
+### CRUD Operations
+### No authorization - must return 403
+GET {{host}}/api/v1/games
+Accept: application/json
+
+###
+### User authorization - must return 200 and JSON
+GET {{host}}/api/v1/games
+Authorization: Basic user user
+Accept: application/json
+
+###
+### Admin authorization - must return 200 and JSON
+GET {{host}}/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+
+###
+### User authorization - must return 403
+POST {{host}}/api/v1/games
+Authorization: Basic user user
+Content-Type: application/json
+
+{
+  "id": "4",
+  "name": "DOOM (1993)",
+  "description": "The legendary FPS that made revolution in graphics and gaming industry at its time period.",
+  "genre": "shooter"
+}
+
+###
+### Admin authorization - must return 200
+POST {{host}}/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Content-Type: application/json
+
+{
+  "id": "4",
+  "name": "DOOM (1993)",
+  "description": "The legendary FPS that made revolution in graphics and gaming industry at its time period.",
+  "genre": "shooter"
+}
+
+###
+### User authorization - must return 403
+PUT {{host}}/api/v1/games
+Authorization: Basic user user
+Content-Type: application/json
+
+{
+  "id": "1",
+  "name": "Dead Cells: Return to Castlevania"
+}
+
+###
+### Admin authorization - must return 200
+PUT {{host}}/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Content-Type: application/json
+
+{
+  "id": "4",
+  "name": "Minecraft",
+  "description": "The best selling videogame in history, released in 2011.",
+  "genre": "sandbox"
+}
+
+###
+### User authorization - must return 403
+DELETE {{host}}/api/v1/games/4
+Authorization: Basic user user
+
+###
+### Admin authorization - must return 200
+DELETE {{host}}/api/v1/games/4
+Authorization: Basic admin Co0l@dmin1337
+
+### SuperAdmin requests - every one of them MUST return 200
+### Superadmin: Access to /admin endpoint (ADMIN role)
+GET {{host}}/api/v1/games/hello/admin
+Authorization: Basic superadmin superadmin
+
+###
+### Superadmin: Access to /user endpoint (USER role)
+GET {{host}}/api/v1/games/hello/user
+Authorization: Basic superadmin superadmin
+
+###
+### Superadmin: Access to /human endpoint (ADMIN / USER role)
+GET {{host}}/api/v1/games/hello/human
+Authorization: Basic superadmin superadmin
+
+###
+### Superadmin: Read games (GET)
+GET {{host}}/api/v1/games
+Authorization: Basic superadmin superadmin
+
+###
+### Superadmin: Create game (POST)
+POST {{host}}/api/v1/games
+Authorization: Basic superadmin superadmin
+Content-Type: application/json
+
+{
+  "id": "5",
+  "name": "ULTRAKILL",
+  "description": "MANKIND IS DEAD. BLOOD IS FUEL. HELL IS FULL.",
+  "genre": "Retro FPS"
+}
+
+###
+### Superadmin: Update game (PUT)
+PUT {{host}}/api/v1/games
+Authorization: Basic superadmin superadmin
+Content-Type: application/json
+
+{
+  "id": "5",
+  "name": "Dead Cells",
+  "description": "A pretty fun 2D roguelite-metroidvania",
+  "genre": "Roguelite-metroidvania"
+}
+
+###
+### Superadmin: Delete games (DELETE)
+DELETE {{host}}/api/v1/games/5
+Authorization: Basic superadmin superadmin
