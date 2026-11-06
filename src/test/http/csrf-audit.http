@@ -1,0 +1,42 @@
+### GET all games - Happy Path
+GET http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+###
+
+### GET one game - Happy Path
+GET http://localhost:8080/api/v1/games/1
+Authorization: Basic admin Co0l@dmin1337
+Accept: application/json
+###
+
+### CREATE new game - Happy Path
+POST http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Content-Type: application/json
+
+{
+  "id": "4",
+  "name": "DOOM (1993)",
+  "description": "The legendary FPS that made revolution in graphics and gaming industry at its time period.",
+  "genre": "shooter"
+}
+###
+
+### UPDATE existing game - Happy Path
+PUT http://localhost:8080/api/v1/games
+Authorization: Basic admin Co0l@dmin1337
+Content-Type: application/json
+
+{
+  "id": "4",
+  "name": "Minecraft",
+  "description": "The best selling videogame in history, released in 2011.",
+  "genre": "sandbox"
+}
+###
+
+### DELETE existing game - Happy Path
+DELETE http://localhost:8080/api/v1/games/2
+Authorization: Basic admin Co0l@dmin1337
+###
